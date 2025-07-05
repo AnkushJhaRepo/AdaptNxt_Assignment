@@ -242,9 +242,13 @@ const checkoutCart = asyncHandler(async (req, res) => {
     cart.totalAmount = 0;
     await cart.save();
 
+    const populatedOrder = await Order.findById(order._id)
+        .populate("items.product", "productName productPrice")
+        .populate("user", "username");
+
     res.status(200).json(new ApiResponse(
         200,
-        order,
+        populatedOrder,
         "Order placed successfully"
     )
     );
