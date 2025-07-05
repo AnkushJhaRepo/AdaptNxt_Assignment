@@ -20,6 +20,19 @@ export default function Products() {
         }
     };
 
+    const logout = async () => {
+        try {
+            await axios.post("/users/logout", {}, { withCredentials: true });
+            setFeedback("👋 Logged out successfully");
+            setTimeout(() => {
+                navigate("/login");
+            }, 1000);
+        } catch (err) {
+            setFeedback("❌ Logout failed");
+        }
+    };
+
+
     const addToCart = async (productId) => {
         const quantity = prompt("Enter quantity:");
         if (!quantity || isNaN(quantity) || quantity <= 0) {
@@ -49,13 +62,22 @@ export default function Products() {
         <div className="p-6 max-w-5xl mx-auto">
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold">🛍️ Available Products</h1>
-                <button
-                    onClick={() => navigate("/cart")}
-                    className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
-                >
-                    Go to Cart 🛒
-                </button>
+                <div className="space-x-4">
+                    <button
+                        onClick={() => navigate("/cart")}
+                        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+                    >
+                        Go to Cart 🛒
+                    </button>
+                    <button
+                        onClick={logout}
+                        className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
+                    >
+                        Logout 🔒
+                    </button>
+                </div>
             </div>
+
 
             {feedback && (
                 <p className="text-center text-blue-600 font-medium mb-4">{feedback}</p>
