@@ -7,6 +7,32 @@ import { ApiResponse } from "../utils/ApiResponse.js"
 import { isValidObjectId } from "mongoose"
 
 
+const getUserCart = asyncHandler(async (req, res) => {
+    const userId = req.user._id
+
+    if (!userId) {
+        throw new ApiError("Please do login")
+    }
+
+    const cart = await Cart.findOne({
+        user: userId
+    })
+        .populate("user", "username")
+        .populate("items.product", "productName productPrice")
+
+    if (!cart) {
+        throw new ApiError(404, "Cart not found")
+    }
+
+    return res.status(200).json(new ApiResponse(
+        200,
+        cart,
+        "Users cart"
+    ))
+
+})
+
+
 const addItemToCart = asyncHandler(async (req, res) => {
     const { productId } = req.params
     const { quantity } = req.body
@@ -229,5 +255,6 @@ export {
     addItemToCart,
     updateCartItem,
     deleteCartItem,
-    checkoutCart
+    checkoutCart,
+    getUserCart
 }
