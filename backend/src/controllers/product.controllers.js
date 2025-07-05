@@ -8,14 +8,14 @@ import { isValidObjectId } from "mongoose"
 const addProduct = asyncHandler(async (req, res) => {
     const { productName, productPrice, productQuantity } = req.body
 
-    if(productName.trim() === ""){
-        throw new ApiError(400,"please give product name")
+    if (productName.trim() === "") {
+        throw new ApiError(400, "please give product name")
     }
 
-    if(
+    if (
         [productPrice, productQuantity].some((field) => field === "")
-    ){
-        throw new ApiError(400,"Please give all input")
+    ) {
+        throw new ApiError(400, "Please give all input")
     }
 
     try {
@@ -50,7 +50,7 @@ const updateProduct = asyncHandler(async (req, res) => {
 
     const { productPrice, productQuantity } = req.body
 
-    if(!isValidObjectId(productId)){
+    if (!isValidObjectId(productId)) {
         throw new ApiError(400, "Please give valid product Id")
     }
 
@@ -73,16 +73,17 @@ const updateProduct = asyncHandler(async (req, res) => {
 
 })
 
-const deleteProduct = asyncHandler(async (req, res) => {
-    const {productId} = req.params
 
-    if(!isValidObjectId(productId)){
+const deleteProduct = asyncHandler(async (req, res) => {
+    const { productId } = req.params
+
+    if (!isValidObjectId(productId)) {
         throw new ApiError(400, "Enter valid product Id")
     }
 
     const product = await Product.findByIdAndDelete(productId)
 
-    if(!product){
+    if (!product) {
         throw new ApiError(404, "No such product found")
     }
 
@@ -97,8 +98,21 @@ const deleteProduct = asyncHandler(async (req, res) => {
 })
 
 
+const getAllProducts = asyncHandler(async (req, res) => {
+    const products = await Product.find();
+
+    return res.status(200).json(new ApiResponse(
+        200,
+        products,
+        "All products fetched"
+    )
+    );
+})
+
+
 export {
     addProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getAllProducts
 }

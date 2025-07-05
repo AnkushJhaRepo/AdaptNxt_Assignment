@@ -4,11 +4,15 @@ import { verifyIfAdmin } from "../middlewares/role.middlewares.js";
 import { 
     addProduct,
     updateProduct,
-    deleteProduct 
+    deleteProduct, 
+    getAllProducts
 } from "../controllers/product.controllers.js";
 
 
 const router =Router()
+
+
+router.route("/").get(getAllProducts)
 
 
 router.route("/add-product").post(verifyJWT, verifyIfAdmin, addProduct)
