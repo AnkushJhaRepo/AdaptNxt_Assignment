@@ -1,3 +1,6 @@
+Live Link :  https://adapt-nxt-assignment-six.vercel.app/
+
+
 🛒 Full-Stack E-Commerce Cart System
 This is a full-stack e-commerce application built with Node.js, Express, MongoDB, React.js, and Tailwind CSS, supporting:
 
