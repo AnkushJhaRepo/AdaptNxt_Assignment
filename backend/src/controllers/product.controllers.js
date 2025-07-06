@@ -99,15 +99,26 @@ const deleteProduct = asyncHandler(async (req, res) => {
 
 
 const getAllProducts = asyncHandler(async (req, res) => {
-    const products = await Product.find();
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 6;
+    const skip = (page - 1) * limit;
+    const search = req.query.search || "";
 
-    return res.status(200).json(new ApiResponse(
-        200,
-        products,
-        "All products fetched"
-    )
-    );
-})
+    const query = {
+        productQuantity: { $gt: 0 },
+        productName: { $regex: search, $options: "i" }
+    };
+
+    const total = await Product.countDocuments(query);
+    const products = await Product.find(query).skip(skip).limit(limit);
+
+    res.status(200).json({
+        success: true,
+        data: products,
+        page,
+        totalPages: Math.ceil(total / limit)
+    });
+});
 
 
 export {
