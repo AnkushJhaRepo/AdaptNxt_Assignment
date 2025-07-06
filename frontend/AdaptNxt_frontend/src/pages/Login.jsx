@@ -30,7 +30,7 @@ export default function Login() {
             });
 
             alert("Login successful!");
-            navigate("/"); // redirect to homepage or dashboard
+            navigate("/product"); 
         } catch (err) {
             setError(err?.response?.data?.message || "Login failed");
         }

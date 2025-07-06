@@ -9,7 +9,7 @@ export default function Order() {
 
     useEffect(() => {
         if (!order) {
-            navigate("/"); // fallback if accessed directly
+            navigate("/"); 
         }
     }, [order]);
 
