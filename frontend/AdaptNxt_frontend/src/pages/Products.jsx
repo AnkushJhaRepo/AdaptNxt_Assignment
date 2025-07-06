@@ -9,7 +9,7 @@ export default function Products() {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [searchTerm, setSearchTerm] = useState("");
-    const [query, setQuery] = useState(""); // what we actually search
+    const [query, setQuery] = useState(""); 
 
     const navigate = useNavigate();
 
@@ -54,8 +54,8 @@ export default function Products() {
 
     const handleSearch = (e) => {
         e.preventDefault();
-        setQuery(searchTerm); // trigger search
-        setPage(1); // reset to first page
+        setQuery(searchTerm); 
+        setPage(1); 
     };
 
     return (
@@ -81,7 +81,7 @@ export default function Products() {
                 </div>
             </div>
 
-            {/* 🔍 Search Bar */}
+            
             <form onSubmit={handleSearch} className="mb-6 flex gap-2">
                 <input
                     type="text"
@@ -124,7 +124,7 @@ export default function Products() {
                         ))}
                     </div>
 
-                    {/* Pagination */}
+                    
                     <div className="mt-6 flex justify-center items-center space-x-4">
                         <button
                             disabled={page <= 1}
