@@ -23,7 +23,7 @@ export default function PublicRoute({ children }) {
 
   if (loading) return <p className="text-center mt-10">Checking authentication...</p>;
 
-  if (isAuthenticated) return <Navigate to="/product" replace />;
+  if (isAuthenticated) return <Navigate to="/products" replace />;
 
   return children;
 }

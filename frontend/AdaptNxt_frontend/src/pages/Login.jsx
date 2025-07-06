@@ -30,7 +30,7 @@ export default function Login() {
             });
 
             alert("Login successful!");
-            navigate("/product"); 
+            navigate("/products"); 
         } catch (err) {
             setError(err?.response?.data?.message || "Login failed");
         }

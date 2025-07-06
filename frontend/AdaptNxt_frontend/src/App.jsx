@@ -40,7 +40,7 @@ export default function App() {
         />
 
         <Route
-          path="/product"
+          path="/products"
           element={
             <PrivateRoute>
               <Products />

@@ -66,7 +66,7 @@ export default function Cart() {
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold">🛒 Your Cart</h1>
                 <button
-                    onClick={() => navigate("/product")}
+                    onClick={() => navigate("/products")}
                     className="bg-gray-200 hover:bg-gray-300 px-4 py-1 rounded"
                 >
                     ← Back to Products
