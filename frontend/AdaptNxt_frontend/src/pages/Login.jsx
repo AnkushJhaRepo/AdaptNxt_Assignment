@@ -30,7 +30,7 @@ export default function Login() {
             });
 
             alert("Login successful!");
-            navigate("/products"); 
+            navigate("/products");
         } catch (err) {
             setError(err?.response?.data?.message || "Login failed");
         }
@@ -74,6 +74,14 @@ export default function Login() {
                 >
                     Login
                 </button>
+
+                <button
+                    onClick={() => navigate("/register")}
+                    className="mt-3 text-sm text-center text-blue-600 hover:underline w-full"
+                >
+                    Don't have an account? Register
+                </button>
+
             </form>
         </div>
     );
