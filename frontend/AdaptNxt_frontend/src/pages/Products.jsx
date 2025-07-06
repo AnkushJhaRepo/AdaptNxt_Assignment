@@ -9,9 +9,19 @@ export default function Products() {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [searchTerm, setSearchTerm] = useState("");
-    const [query, setQuery] = useState(""); 
+    const [query, setQuery] = useState("");
+    const [user, setUser] = useState(null); 
 
     const navigate = useNavigate();
+
+    const fetchUser = async () => {
+        try {
+            const res = await axios.get("/users/current-user", { withCredentials: true });
+            setUser(res.data.data);
+        } catch (err) {
+            console.error("Failed to fetch user", err);
+        }
+    };
 
     const fetchProducts = async (pageNumber = 1, q = "") => {
         setLoading(true);
@@ -48,21 +58,30 @@ export default function Products() {
         setTimeout(() => setFeedback(""), 3000);
     };
 
-    useEffect(() => {
-        fetchProducts(page, query);
-    }, [page, query]);
-
     const handleSearch = (e) => {
         e.preventDefault();
-        setQuery(searchTerm); 
-        setPage(1); 
+        setQuery(searchTerm);
+        setPage(1);
     };
+
+    useEffect(() => {
+        fetchProducts(page, query);
+        fetchUser();
+    }, [page, query]);
 
     return (
         <div className="p-6 max-w-5xl mx-auto">
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold">🛍️ Available Products</h1>
-                <div className="space-x-4">
+                <div className="space-x-4 flex gap-2">
+                    {user?.isAdmin && (
+                        <button
+                            onClick={() => navigate("/admin")}
+                            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                        >
+                            ➕ Add Product
+                        </button>
+                    )}
                     <button
                         onClick={() => navigate("/cart")}
                         className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
@@ -81,7 +100,7 @@ export default function Products() {
                 </div>
             </div>
 
-            
+           
             <form onSubmit={handleSearch} className="mb-6 flex gap-2">
                 <input
                     type="text"
@@ -124,7 +143,6 @@ export default function Products() {
                         ))}
                     </div>
 
-                    
                     <div className="mt-6 flex justify-center items-center space-x-4">
                         <button
                             disabled={page <= 1}
